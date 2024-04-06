@@ -15,10 +15,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const addToCartButtons = document.querySelectorAll('.product button');
 
   // Function to handle adding to cart and displaying message
-  function addToCartHandler() {
+  function addToCartHandler(event) {
+    // Prevent default action for touch events
+    event.preventDefault();
+
     // Find the parent product div
     const product = this.parentNode;
-    
+
+    // Check if a message is already displayed for this product
+    const existingMessage = product.nextElementSibling;
+    if (existingMessage && existingMessage.classList.contains('added-to-cart')) {
+      // If a message is already displayed, do nothing
+      return;
+    }
+
     // Create a message element
     const message = document.createElement('p');
     message.textContent = 'Added to cart!';
