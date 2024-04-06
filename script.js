@@ -14,24 +14,28 @@ document.addEventListener('DOMContentLoaded', function() {
   // Select all "Add to Cart" buttons
   const addToCartButtons = document.querySelectorAll('.product button');
 
-  // Add event listener to each button
+  // Function to handle adding to cart and displaying message
+  function addToCartHandler() {
+    // Find the parent product div
+    const product = this.parentNode;
+    
+    // Create a message element
+    const message = document.createElement('p');
+    message.textContent = 'Added to cart!';
+    message.classList.add('added-to-cart');
+
+    // Insert the message after the product
+    product.parentNode.insertBefore(message, product.nextSibling);
+
+    // Remove the message after 3 seconds
+    setTimeout(function() {
+      message.remove();
+    }, 3000);
+  }
+
+  // Add event listeners for both click and touch events
   addToCartButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-      // Find the parent product div
-      const product = this.parentNode;
-      
-      // Create a message element
-      const message = document.createElement('p');
-      message.textContent = 'Added to cart!';
-      message.classList.add('added-to-cart');
-
-      // Insert the message after the product
-      product.parentNode.insertBefore(message, product.nextSibling);
-
-      // Remove the message after 3 seconds
-      setTimeout(function() {
-        message.remove();
-      }, 3000);
-    });
+    button.addEventListener('click', addToCartHandler);
+    button.addEventListener('touchstart', addToCartHandler);
   });
 });
